@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RFID</string>
+    <string name="explanation">請使用手機感應周遭標籤</string>
+</resources>
