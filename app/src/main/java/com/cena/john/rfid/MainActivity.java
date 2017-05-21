@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private IntentFilter[] intentFilters;
     private PendingIntent pendingIntent;
     private String xyz;
+    private String abc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +65,7 @@ public class MainActivity extends AppCompatActivity {
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         byte[] id = tag.getId();
-        try {
-            Toast.makeText(this, getHexString(id), Toast.LENGTH_LONG).show();
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        Toast.makeText(this, tag.getId().toString(), LENGTH_LONG).show();
+
         if (rawMsgs != null) {
             NdefMessage[] msgs = new NdefMessage[rawMsgs.length];
             for (int i = 0; i < rawMsgs.length; i++) {
@@ -80,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
                 xyz = new String(msg.getRecords()[0].getPayload(), "UTF-8");
                 xyz = xyz.substring(3);
+                abc =  getHexString(id);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -91,14 +88,14 @@ public class MainActivity extends AppCompatActivity {
                 dataIntent.setClass(MainActivity.this, menuActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("params", xyz);
-
+                bundle.putString("params2", abc);
                 dataIntent.putExtras(bundle);
                 MainActivity.this.startActivity(dataIntent);
             }
         });
     }
 
-    public static String getHexString(byte[] b) throws Exception {
+    public static String getHexString(byte[] b)  {
         String result = "";
         for (int i = 0; i < b.length; i++) {
             result +=

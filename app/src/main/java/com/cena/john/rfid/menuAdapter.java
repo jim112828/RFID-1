@@ -21,13 +21,14 @@ public class menuAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private List<String> mDescs;
+    private String uid;
 
 
-    public menuAdapter(Context context, String[] dataSplit, List<String> descs) {
+    public menuAdapter(Context context, String[] dataSplit, List<String> descs,String uid) {
         this.mdataSplit = dataSplit;
         this.mContext = context;
         this.mDescs = descs;
-
+        this.uid = uid;
         mInflater = LayoutInflater.from(mContext);
     }
 
@@ -69,7 +70,7 @@ public class menuAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
 
-                        gotoActivity(mdataSplit[0]);
+                        gotoActivity(mdataSplit[0],uid);
                     }
                 });
                 break;
@@ -78,7 +79,7 @@ public class menuAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
 
-                        gotoActivity(mdataSplit[1]);
+                        gotoActivity(mdataSplit[1],uid);
                     }
                 });
                 break;
@@ -87,21 +88,22 @@ public class menuAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
 
-                        gotoActivity(mdataSplit[2]);
+                        gotoActivity(mdataSplit[2],uid);
                     }
                 });
+
                 break;
         }
 
         return convertView;
     }
 
-    private void gotoActivity(String string) {
+    private void gotoActivity(String string,String uid) {
         Intent intent = new Intent();
         intent.setClass(mContext, OutputActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("data", string);
-
+        bundle.putString("uid",uid);
         intent.putExtras(bundle);
         mContext.startActivity(intent);
 
